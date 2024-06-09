@@ -1,0 +1,281 @@
+import tkinter as tk
+from PIL import ImageTk
+from tkinter import *
+import currency_gui_treeview
+from tkinter import ttk
+import customtkinter
+
+bg_color = "#dab600"
+
+def load_frame1():
+	frame_main.pack_propagate(False)
+	# Logo Widget
+	logo_img = ImageTk.PhotoImage(file="assets/currency_logo_small.png")
+	logo_widget = tk.Label(frame_main, image=logo_img, bg=bg_color)
+	logo_widget.image = logo_img
+	logo_widget.pack()
+
+	# Label Widget
+	tk.Label(frame_main, text="Ready to extract currency data from the web", 
+		bg=bg_color,
+		fg="black",
+		font=("TkMenuFont", 14)).pack()
+
+	# First Frame
+	frame1 = tk.Frame(frame_main, width=50, height=27)
+	frame1.pack(pady=4, padx=6,  expand=False)
+
+	buttonClear = tk.Button(master=frame1, text="C", fg="black",width=2, height=1,
+		command=lambda:clear(),font=('Arial', 14))
+	buttonClear.pack(padx=2, pady=2, side=tk.LEFT)
+	root.bind("<Escape>",lambda event:clear())
+
+	buttonDiv = tk.Button(master=frame1, text="/", fg="black",width=2, height=1,
+		command=lambda:buttonPress("/", expression),font=('Arial', 14))
+	buttonDiv.pack(padx=2, pady=2, side=tk.LEFT)
+	root.bind("/",lambda event:buttonPress("/", expression))
+
+	buttonMul = tk.Button(master=frame1, text="x", fg="black",width=2, height=1,
+		command=lambda:buttonPress("*", expression),font=('Arial', 14))
+	buttonMul.pack(padx=2, pady=2, side=tk.LEFT)
+	root.bind("*",lambda event:buttonPress("*", expression))
+
+
+    # buttonMin = customtkinter.CTkButton(master=frame1, text="−", text_color="black",width=60, height=30, command=lambda:buttonPress("-"),corner_radius=5, font=('Times', 30))
+    # buttonMin.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("-",lambda event:buttonPress("-"))
+
+    # buttonPlus = customtkinter.CTkButton(master=frame1, text="+", text_color="black",width=60, height=30, command=lambda:buttonPress("+"),corner_radius=5, font=('Times', 30))
+    # buttonPlus.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("+",lambda event:buttonPress("+"))
+
+    # #Second Frame
+    # frame1 = customtkinter.CTkFrame(master=root, width=50, height=27)
+    # frame1.pack(pady=4, padx=6,  expand=False)
+
+    # button7 = customtkinter.CTkButton(master=frame1, text="7", text_color="black",width=60, height=30, command=lambda:buttonPress("7"), border_width=0,corner_radius=5, font=('Times', 30,"bold"))
+    # button7.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("7",lambda event:buttonPress("7"))
+
+    # button8 = customtkinter.CTkButton(master=frame1, text="8", text_color="black",width=60, height=30, command=lambda:buttonPress("8"),corner_radius=5, font=('Times', 30,"bold"))
+    # button8.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("8",lambda event:buttonPress("8"))
+
+    # button9 = customtkinter.CTkButton(master=frame1, text="9", text_color="black",width=60, height=30, command=lambda:buttonPress("9"),corner_radius=5, font=('Times', 30,"bold"))
+    # button9.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("9",lambda event:buttonPress("9"))
+
+    # buttonRoot = customtkinter.CTkButton(master=frame1, text="√", text_color="black",width=60, height=30, command=lambda:buttonPress("**0.5"),corner_radius=5, font=('Times', 30))
+    # buttonRoot.pack(padx=2, pady=2, side=LEFT)  
+
+    # buttonSqr = customtkinter.CTkButton(master=frame1, text="sqr", text_color="black",width=60, height=30, command=lambda:buttonPress("**2"),corner_radius=5, font=('Times', 30))
+    # buttonSqr.pack(padx=2, pady=2, side=LEFT)
+
+    # # Third Frame
+
+    # frame1 = customtkinter.CTkFrame(master=root, width=50, height=27)
+    # frame1.pack(pady=4, padx=6,  expand=False)
+
+    # button4 = customtkinter.CTkButton(master=frame1, text="4", text_color="black",width=60, height=30, command=lambda:buttonPress("4"), border_width=0,corner_radius=5, font=('Times', 30,"bold"))
+    # button4.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("4",lambda event:buttonPress("4")) 
+
+    # button5 = customtkinter.CTkButton(master=frame1, text="5", text_color="black",width=60, height=30, command=lambda:buttonPress("5"),corner_radius=5, font=('Times', 30,"bold"))
+    # button5.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("5",lambda event:buttonPress("5"))
+
+    # button6 = customtkinter.CTkButton(master=frame1, text="6", text_color="black",width=60, height=30, command=lambda:buttonPress("6"),corner_radius=5, font=('Times', 30,"bold"))
+    # button6.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("6",lambda event:buttonPress("6"))
+
+    # buttonPlusMinus = customtkinter.CTkButton(master=frame1, text="<<", text_color="black",width=60, height=30, command=lambda:returnExp(), border_width=0,corner_radius=5, font=('Times', 30))
+    # buttonPlusMinus.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("<BackSpace>",lambda event:returnExp())
+
+    # buttonPer = customtkinter.CTkButton(master=frame1, text="%", text_color="black",width=60, height=30, command=lambda:buttonPress("/100"), border_width=0,corner_radius=5, font=('Times', 30))
+    # buttonPer.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("%",lambda event:buttonPress("%"))
+
+    # # Fourth Frame
+    # frame1 = customtkinter.CTkFrame(master=root, width=50, height=27)
+    # frame1.pack(pady=4, padx=6,  expand=False)
+
+    # button1 = customtkinter.CTkButton(master=frame1, text="1", text_color="black",width=60, height=30, command=lambda:buttonPress("1"), border_width=0,corner_radius=5, font=('Times', 30,"bold"))
+    # button1.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("1",lambda event:buttonPress("1"))
+
+    # button2 = customtkinter.CTkButton(master=frame1, text="2", text_color="black",width=60, height=30, command=lambda:buttonPress("2"),corner_radius=5, font=('Times', 30,"bold"))
+    # button2.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("2",lambda event:buttonPress("2"))
+
+    # button3 = customtkinter.CTkButton(master=frame1, text="3", text_color="black",width=60, height=30, command=lambda:buttonPress("3"),corner_radius=5, font=('Times', 30,"bold"))
+    # button3.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("3",lambda event:buttonPress("3"))
+
+    # button0 = customtkinter.CTkButton(master=frame1, text="0", text_color="black",width=60, height=30, command=lambda:buttonPress("0"),corner_radius=5, font=('Times', 30,"bold"))
+    # button0.pack(padx=2, pady=2, side=LEFT)
+    # root.bind("0",lambda event:buttonPress("0"))
+
+    # buttonDec = customtkinter.CTkButton(master=frame1, text=".", text_color="black",width=60, height=30, command=lambda:buttonPress("."),corner_radius=5, font=('Times', 30))
+    # buttonDec.pack(padx=2, pady=2, side=LEFT)
+    # root.bind(".",lambda event:buttonPress("."))
+    
+    # # Fifth Frame
+    # frame1 = customtkinter.CTkFrame(master=root)
+    # frame1.pack(pady=4, padx=5)
+
+    # buttonEqual = customtkinter.CTkButton(master=frame1, text="=", text_color="black",width=100, height=50, command=lambda:equalPress(),corner_radius=5, font=('Times', 30))
+    # buttonEqual.pack(padx=2, pady=2, side=RIGHT)
+    # root.bind("<Return>",lambda event:equalPress())
+
+expression = ""
+
+def clear():    
+    expression = ""   
+    equation.set("")
+    return expression
+
+def buttonPress(num, expression):    
+    expression = expression + str(num)
+    equation.set(expression)
+    return expression
+
+def character_limit(expression):
+    if len(equation.get()) >= 16:
+        equation.set(equation.get()[:-1])
+
+
+
+def OpenMarket():
+	currency_gui_treeview.currency_open_rates()
+
+def InterBank():
+	currency_gui_treeview.currency_inter_bank_rates()
+
+def ForeignExchange():
+	currency_gui_treeview.foreign_exchange_rates()
+
+def GoldRates():
+	currency_gui_treeview.gold_rates()
+
+def GoldRatesPak():
+	currency_gui_treeview.gold_rates_pak()
+
+def GoldRatesOthers():
+	currency_gui_treeview.gold_rates_others()
+
+def about():
+	# Initializing App
+	root = tk.Tk()
+	root.title('About')
+	# Place our window to the centre of the screen 
+	# root.eval("tk::PlaceWindow . center")
+	x = root.winfo_screenwidth()//2
+	y = int(root.winfo_screenheight()*0.1)
+	root.geometry('500x200+' + str(x) + '+' + str(y))
+
+	# Creating Frame Widget
+	frame_main = tk.Frame(root, width=500, height=200, bg=bg_color)
+	frame_main.grid(row=0, column=0)
+	frame_main.pack_propagate(False)
+	# Label Widget
+
+	encodings = ['utf-8', 'latin-1']
+	for encoding in encodings:
+		with open("assets/about.txt", "rb") as file:
+		 file_content = file.read().decode(encoding)
+	
+	tk.Label(frame_main, text=file_content,
+		bg=bg_color,
+		fg="black",
+		font=("TkMenuFont", 10), wraplength=400).pack()
+
+
+	root.mainloop()
+
+def license():
+	# Initializing App
+	root = tk.Tk()
+	root.title('License')
+	# Place our window to the centre of the screen 
+	# root.eval("tk::PlaceWindow . center")
+	x = root.winfo_screenwidth()//4
+	y = int(root.winfo_screenheight()*0.1)
+	root.geometry('500x600+' + str(x) + '+' + str(y))
+
+	# Creating Frame Widget
+	frame_main = tk.Frame(root, width=500, height=600, bg=bg_color)
+	frame_main.grid(row=0, column=0)
+	frame_main.pack_propagate(False)
+	# Label Widget
+	encodings = ['utf-8', 'latin-1']
+	for encoding in encodings:
+		with open("assets/license.txt", "rb") as file:
+		 file_content = file.read().decode(encoding)
+	
+	tk.Label(frame_main, text=file_content,
+		bg=bg_color,
+		fg="black",
+		font=("TkMenuFont", 10), wraplength=400).pack()
+
+	root.mainloop()
+
+if __name__=="__main__":
+	# Initializing App
+	root = tk.Tk()
+	root.title('Currency Extractor')
+
+	style = ttk.Style()
+	style.theme_use('clam')  # Change the theme here (e.g., 'clam', 'alt', 'default', 'classic')
+
+	# Place our window to the centre of the screen 
+	# root.eval("tk::PlaceWindow . center")
+	x = root.winfo_screenwidth()//3
+	y = int(root.winfo_screenheight()*0.1)
+	root.geometry('500x600+' + str(x) + '+' + str(y))
+
+	
+	# Creating Frame Widget
+	frame_main = tk.Frame(root, width= 500, height=600, bg=bg_color)
+	frame_main.grid(row=0, column=0)
+
+	equation = StringVar()
+	expressionLabel = tk.Entry(master=frame_main, justify=tk.CENTER, width=200,
+		textvariable=equation,font=('Arial', 20), fg="black")
+	expressionLabel.configure(state="disabled")
+	expressionLabel.pack()
+	equation.trace("w", lambda *args: character_limit(expression))
+
+	load_frame1()
+
+	# Menu Bar
+	menu_bar = tk.Menu(root)	
+
+	# Currency Menu
+	currency_menu = tk.Menu(menu_bar, tearoff=0)
+	menu_bar.add_cascade(label="Currency", menu=currency_menu)
+	currency_menu.add_command(label="Open Market Rates", command=OpenMarket)
+	currency_menu.add_command(label="Inter Bank Rates", command=InterBank)
+	currency_menu.add_command(label="Foreign Exchange Rates", command=ForeignExchange)
+	currency_menu.add_separator()
+	currency_menu.add_command(label="Exit", command=root.destroy)
+
+	# Gold Menu
+	gold_menu = tk.Menu(menu_bar, tearoff=0)
+	menu_bar.add_cascade(label="Gold", menu=gold_menu)
+	gold_menu.add_command(label="Gold Rates", command=GoldRates)
+	gold_menu.add_command(label="Gold Rates(PAK)", command=GoldRatesPak)
+	gold_menu.add_command(label="Gold Price(Others)", command=GoldRatesOthers)
+	
+	
+	# Help Menu
+	help_menu = tk.Menu(menu_bar, tearoff=0)
+	menu_bar.add_cascade(label="Help", menu=help_menu)
+	help_menu.add_command(label="Setting", command=InterBank)
+	help_menu.add_command(label="License", command=license)
+	help_menu.add_command(label="About", command=about)
+
+	help_menu.entryconfig("Setting", state="disabled")
+
+	root.config(menu=menu_bar)
+	root.mainloop()
